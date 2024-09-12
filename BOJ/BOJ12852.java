@@ -4,52 +4,48 @@ import java.util.Scanner;
 
 public class BOJ12852 {
 
-    private static int[] size;
-    private static int[] rou;
+    public static void main(String[] args) {
+        int[] routes = new int[1000001];
+        int[] routes2 = new int[1000001];
+        routes[1] = 0;
+        routes[2] = 1;
+        routes[3] = 1;
+        routes2[2] = 1;
+        routes2[3] = 1;
 
-    public static void func(int n) {
-        size = new int[n + 1];
-        rou = new int[n + 1];
-
-        size[1] = 0;
-        rou[1] = 0;
-        if (n == 1)
-            return;
-        size[2] = 1;
-        rou[2] = 1;
-        if (n == 2)
-            return;
-        size[3] = 1;
-        rou[3] = 1;
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        scanner.close();
 
         for (int i = 4; i <= n; i++) {
             int min = Integer.MAX_VALUE;
-            int index = -1;
-            if (i % 3 == 0 && size[i % 3] < min) {
-                index = i % 3;
-                min = size[index];
+            int index = 0;
+            if (i % 3 == 0 && routes[i / 3] < min) {
+                min = routes[i / 3];
+                index = i/3;
             }
-            if (i % 2 == 0 && size[i % 2] < min) {
-                index = i % 2;
-                min = size[index];
+            if (i % 2 == 0 && routes[i / 2] < min) {
+                min = routes[i / 2];
+                index = i/2;
             }
-            if (size[i - 1] < min) {
-                index = i - 1;
-                min = size[index];
+            if (routes[i - 1] < min) {
+                min = routes[i - 1];
+                index = i-1;
             }
-            size[i] = size[index] + 1;
-            rou[i] = index;
+            routes[i] = min + 1;
+            routes2[i] = index;
         }
-    }
 
-    public static void main(String[] args) {
-        int n;
+        System.out.println(routes[n]);
 
-        Scanner scanner = new Scanner(System.in);
-        n = scanner.nextInt();
-        scanner.close();
-        func(n);
-        System.out.println(size[n]);
+        int index = n;
+        System.out.print(index+" ");
+        while(index!=1){
+            System.out.print(routes2[index]);
+            if(index!=1)
+            System.out.print(" ");
+            index = routes2[index];
+        }
 
     }
 }
