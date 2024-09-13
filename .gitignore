@@ -1,2 +1,5 @@
 output
 *.class
+*.yml
+*.plist
+*.o
