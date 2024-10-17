@@ -16,7 +16,6 @@ public class BOJ9663 {
             boolean flag = true;
 
             for (int j = index - 1; j >= 0; j--) {
-
                 if (i == map[j] || Math.abs(map[j] - i) == Math.abs(index - j)) {
                     flag = false;
                     break;
