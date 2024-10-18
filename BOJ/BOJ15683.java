@@ -10,7 +10,6 @@ public class BOJ15683 {
     static int[] dy = { 0, -1, 0, 1 };
     static int min = Integer.MAX_VALUE;
 
-    // 감시 영역을 표시하는 함수
     static void fill(int x, int y, int direction, int[][] cctvMap) {
         direction %= 4;
         while (true) {
@@ -23,7 +22,6 @@ public class BOJ15683 {
         }
     }
 
-    // 감시 영역을 되돌리는 함수
     static void unfill(int x, int y, int direction, int[][] cctvMap) {
         direction %= 4;
         while (true) {
