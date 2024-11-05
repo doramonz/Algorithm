@@ -20,18 +20,7 @@ public class BOJ1197 {
             p[av] = bv;
     }
 
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int v = Integer.parseInt(st.nextToken());
-        int e = Integer.parseInt(st.nextToken());
-
-        List<int[]> arr = new ArrayList<>(100000);
-        for (int i = 0; i < e; i++) {
-            st = new StringTokenizer(br.readLine());
-            arr.add(new int[] { Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()),
-                    Integer.parseInt(st.nextToken()) });
-        }
+    static long kruscal(List<int[]> arr, int v) {
         Collections.sort(arr, new Comparator<>() {
             @Override
             public int compare(int[] a, int[] b) {
@@ -49,6 +38,65 @@ public class BOJ1197 {
                 value += node[2];
             }
         }
-        System.out.println(value);
+        return value;
+    }
+
+    static long prim(List<int[]>[] arr, int v) {
+        PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[2] - o2[2];
+            }
+        });
+        boolean[] visit = new boolean[v + 1];
+        int count = 0;
+        long value = 0;
+        for (int i = 0; i < arr[1].size(); i++)
+            queue.add(arr[1].get(i));
+        visit[1] = true;
+        while (count < v - 1) {
+            int[] poll = queue.poll();
+            if (visit[poll[1]])
+                continue;
+            value += poll[2];
+            count++;
+            visit[poll[1]] = true;
+            for (int[] e : arr[poll[1]]) {
+                if (!visit[e[1]]) {
+                    queue.add(e);
+                }
+            }
+        }
+        return value;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int v = Integer.parseInt(st.nextToken());
+        int e = Integer.parseInt(st.nextToken());
+
+        List<int[]> arr = new ArrayList<>(100000);
+        for (int i = 0; i < e; i++) {
+            st = new StringTokenizer(br.readLine());
+            arr.add(new int[] { Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()),
+                    Integer.parseInt(st.nextToken()) });
+        }
+        List<int[]>[] arr2 = new List[v + 1];
+        for (int i = 0; i < arr2.length; i++)
+            arr2[i] = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            int a = arr.get(i)[0];
+            int b = arr.get(i)[1];
+            int c = arr.get(i)[2];
+            arr2[a].add(new int[] { a, b, c });
+            arr2[b].add(new int[] { b, a, c });
+        }
+
+        // kruscal's version
+        // System.out.println(kruscal(arr, v));
+
+        // prim's version
+        System.out.println(prim(arr2, v));
     }
 }
