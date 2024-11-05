@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class BOJ1197 {
+    static int[] rank;
+
     static int find(int[] p, int a) {
         if (p[a] == a)
             return a;
@@ -14,10 +16,20 @@ public class BOJ1197 {
     static void union(int[] p, int a, int b) {
         int av = find(p, a);
         int bv = find(p, b);
-        if (av < bv)
+        if (av == bv)
+            return;
+        if (rank[av] > rank[bv]) {
             p[bv] = av;
-        else
+        } else if (rank[bv] > rank[av]) {
             p[av] = bv;
+        } else {
+            p[bv] = av;
+            rank[av]++;
+        }
+        // if (av < bv)
+        //     p[bv] = av;
+        // else
+        //     p[av] = bv;
     }
 
     static long kruscal(List<int[]> arr, int v) {
@@ -27,6 +39,7 @@ public class BOJ1197 {
                 return a[2] - b[2];
             }
         });
+        rank = new int[v+1];
         int[] p = new int[v + 1];
         long value = 0;
         for (int i = 1; i < p.length; i++)
@@ -94,9 +107,9 @@ public class BOJ1197 {
         }
 
         // kruscal's version
-        // System.out.println(kruscal(arr, v));
+        System.out.println(kruscal(arr, v));
 
         // prim's version
-        System.out.println(prim(arr2, v));
+        // System.out.println(prim(arr2, v));
     }
 }
