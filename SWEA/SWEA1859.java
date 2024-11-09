@@ -34,7 +34,7 @@ import java.util.*;
    사용하는 클래스명이 Solution 이어야 하므로, 가급적 Solution.java 를 사용할 것을 권장합니다.
    이러한 상황에서도 동일하게 java Solution 명령으로 프로그램을 수행해볼 수 있습니다.
  */
-class SWEA1859 {
+public class SWEA1859 {
     public static void main(String args[]) throws Exception {
         /*
          * 아래의 메소드 호출은 앞으로 표준 입력(키보드) 대신 input.txt 파일로부터 읽어오겠다는 의미의 코드입니다.
@@ -56,33 +56,25 @@ class SWEA1859 {
          * 여러 개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
          */
 
+        StringBuilder sb = new StringBuilder();
         for (int test_case = 1; test_case <= T; test_case++) {
             int n = Integer.parseInt(br.readLine());
             StringTokenizer st = new StringTokenizer(br.readLine());
             int[] arr = new int[n];
-            int[][] sorted = new int[n][2];
             for (int i = 0; i < n; i++) {
                 arr[i] = Integer.parseInt(st.nextToken());
-                sorted[i][1] = i;
-                sorted[i][0] = arr[i];
             }
-            Arrays.sort(sorted, (x, y) -> {
-                return x[0] - y[0];
-            });
-            for (int i = 0; i < n; i++) {
-                int left = 0;
-                int right = n - 1;
-                int mid;
-                while (left < right) {
-                    mid = (left + right) / 2;
-                    if (arr[i] >= sorted[mid][0]) {
-                        left = mid + 1;
-                    } else {
-                        right = mid;
-                    }
+            int max = 0;
+            long sum = 0;
+            for (int i = n - 1; i >= 0; i--) {
+                if (arr[i] > max) {
+                    max = arr[i];
+                } else {
+                    sum += max - arr[i];
                 }
-                System.out.println(right + " " + sorted[right][1]);
             }
+            sb.append("#"+test_case+" "+sum+"\n");
         }
+        System.out.println(sb);
     }
 }
