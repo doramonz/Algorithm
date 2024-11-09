@@ -3,3 +3,4 @@ output
 *.yml
 *.plist
 *.o
+.vscode
