@@ -1,49 +1,39 @@
 package BOJ;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class BOJ1477 {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int l = Integer.parseInt(st.nextToken());
+        int[] rest = new int[n + 2];
+        st = new StringTokenizer(br.readLine());
+        rest[0] = 0;
+        for (int i = 1; i <= n; i++)
+            rest[i] = Integer.parseInt(st.nextToken());
+        rest[n + 1] = l;
+        Arrays.sort(rest);
 
-    private static int minMaxHighWayRestArea(int n, int size, int[] restAreas) {
-        Arrays.sort(restAreas);
-
-        PriorityQueue<Integer> queue = new PriorityQueue<>(Collections.reverseOrder());
-        queue.add(restAreas[0]);
-        for (int i = 1; i < restAreas.length; i++) {
-            queue.add(restAreas[i] - restAreas[i - 1]);
-        }
-        queue.add(size - restAreas[restAreas.length - 1]);
-
-        for (int i = 0; i < n; i++) {
-            int poll = queue.poll();
-            if (poll % 2 == 0) {
-                queue.add(poll / 2);
-                queue.add(poll / 2);
+        int i = 1;
+        int r = l;
+        int result = 0;
+        while (i <= r) {
+            int mid = (i + r) / 2;
+            int d = 0;
+            for (int k = 1; k < rest.length; k++)
+                d += (rest[k] - rest[k - 1] - 1) / mid;
+            if (d > m) {
+                i = mid + 1;
             } else {
-                queue.add(poll / 2);
-                queue.add(poll / 2 + 1);
+                result = mid;
+                r = mid - 1;
             }
         }
-
-        return queue.poll();
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int input, n, size;
-        input = scanner.nextInt();
-        n = scanner.nextInt();
-        size = scanner.nextInt();
-        int[] restAreas = new int[input];
-        for (int i = 0; i < input; i++) {
-            restAreas[i] = scanner.nextInt();
-        }
-        scanner.close();
-
-        System.out.println(minMaxHighWayRestArea(n, size, restAreas));
+        System.out.println(result);
     }
 
 }
