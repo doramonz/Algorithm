@@ -9,16 +9,16 @@ public class BOJ15665 {
     static int[] arr;
     static StringBuilder sb = new StringBuilder();
 
-    static void recur(int count, String s) {
+    static void recur(int count, String s, int index) {
         if (count == m) {
             sb.append(s).append("\n");
             return;
         }
         int lastUsed = -1;
-        for (int i = 0; i < n; i++) {
+        for (int i = index; i < n; i++) {
             if (arr[i] == lastUsed)
                 continue;
-            recur(count + 1, s + arr[i] + " ");
+            recur(count + 1, s + arr[i] + " ", i);
             lastUsed = arr[i];
         }
     }
@@ -33,7 +33,7 @@ public class BOJ15665 {
         for (int i = 0; i < n; i++)
             arr[i] = Integer.parseInt(st.nextToken());
         Arrays.sort(arr);
-        recur(0, "");
+        recur(0, "", 0);
         System.out.println(sb);
     }
 }
