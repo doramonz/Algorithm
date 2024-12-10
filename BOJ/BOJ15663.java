@@ -9,21 +9,19 @@ public class BOJ15663 {
     static int[] arr;
     static boolean[] used;
     static StringBuilder sb = new StringBuilder();
-    static Set<String> set = new HashSet<>();
 
     static void recur(int count, String s) {
         if (count == m) {
-            if (set.contains(s))
-                return;
-            set.add(s);
             sb.append(s).append("\n");
             return;
         }
+        int lastUsed = -1;
         for (int i = 0; i < n; i++) {
-            if (used[i])
+            if (used[i] || arr[i] == lastUsed)
                 continue;
             used[i] = true;
             recur(count + 1, s + arr[i] + " ");
+            lastUsed = arr[i];
             used[i] = false;
         }
     }
