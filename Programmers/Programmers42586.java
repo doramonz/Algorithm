@@ -5,30 +5,24 @@ import java.util.*;
 public class Programmers42586 {
 
     public int[] solution(int[] progresses, int[] speeds) {
-        int[] answer = {};
+        List<Integer> result = new ArrayList<>();
         int[] count = new int[progresses.length];
-        List<Integer> list = new ArrayList<>();
-        for (int j = 0; j < 100; j++) {
-            for (int i = 0; i < progresses.length; i++) {
-                if (progresses[i] < 100) {
-                    progresses[i] += speeds[i];
-                    count[i]++;
-                }
+        for(int i = 0;i<progresses.length;i++){
+            count[i] = (int) Math.ceil((100.0 - progresses[i]) / speeds[i]);
+        }
+        int max = count[0];
+        int c = 0;
+        for(int i : count){
+            if(i<=max){
+                c++;
+            }else{
+                result.add(c);
+                c = 1;
+                max = i;
             }
         }
-        int index = 0;
-        while (index < count.length) {
-            int cum = 0;
-            int value = count[index];
-            while (index < count.length && count[index] <= value) {
-                cum++;
-                index++;
-            }
-            list.add(cum);
-        }
-        answer = new int[list.size()];
-        for (int i = 0; i < list.size(); i++)
-            answer[i] = list.get(i);
-        return answer;
+        
+        result.add(c);
+        return result.stream().mapToInt(Integer::intValue).toArray();
     }
 }
