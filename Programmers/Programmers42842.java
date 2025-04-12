@@ -1,7 +1,7 @@
 package Programmers;
 
 public class Programmers42842 {
-    public int[] solution(int brown, int yellow) {
+        public int[] solution(int brown, int yellow) {
         int[] answer = new int[2];
         for(int x = 1;x<=yellow/2+1;x++){
             int y = yellow/x;

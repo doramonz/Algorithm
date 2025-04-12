@@ -1,5 +1,6 @@
 package Programmers;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class Programmers131704 {
@@ -15,7 +16,7 @@ public class Programmers131704 {
                 stack.push(v++);
             }else{
                 break;
-            }
+            }Arrays.stream(null).as
         }
         return answer;
     }
