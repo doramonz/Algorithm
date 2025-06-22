@@ -1,6 +1,6 @@
 function twoSum(nums: number[], target: number): number[] {
     const map = new Map<number, number>();
-    let result
+    let result: number[] = [];
 
     nums.forEach((value, index) => {
         const complement = target - value;
