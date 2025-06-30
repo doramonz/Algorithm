@@ -4,3 +4,4 @@ output
 *.plist
 *.o
 .vscode/*
+.Ds_Store
