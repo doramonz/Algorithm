@@ -1,30 +1,19 @@
 function convert(s: string, numRows: number): string {
-    if (numRows === 1)
-        return s;
+    if (numRows === 1) return s;
 
-    let result = "";
+    const result: string[] = [];
 
     for (let i = 0; i < numRows; i++) {
-        let index = i;
+        for(let j = i; j < s.length; j += 2 * (numRows - 1)) {
+            result.push(s.charAt(j));
 
-        if (i === 0 || i === numRows - 1) {
-            while (index < s.length) {
-                result += s.charAt(index);
-                index += 2 * (numRows - 1);
-            }
-        } else {
-            while (index < s.length) {
-                result += s.charAt(index);
-                index += 2 * (numRows - i - 1);
-                if (index < s.length) {
-                    result += s.charAt(index);
-                    index += 2 * i;
-                }
+            if(i != 0 && i != numRows - 1) {
+                result.push(s.charAt(j + 2 * (numRows - i - 1)));
             }
         }
     }
 
-    return result;
+    return result.join('');
 };
 
 console.log(convert("PAYPALISHIRING", 3)); // Output: "PAHNAPLSIIGYIR"
